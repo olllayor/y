@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .shadow-background {
+        @apply w-full h-full absolute inset-0 bg-black rounded-xl translate-y-2 translate-x-2;
+      }
+
+      .main-card {
+        @apply bg-[#fafafa] rounded-xl border-[3px] border-gray-900 p-6 relative z-20 space-y-6;
+      }
+      .btn-shadow {
+        @apply w-full h-full rounded bg-gray-900 translate-y-1 translate-x-1 absolute inset-0;
+      }
+      .video-loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+      }
+      .hidden {
+        display: none;
+      }
+      .video-container {
+        max-width: 100%; /* Ensure video does not exceed the container width */
+        display: flex;
+        justify-content: center;
+      }
+      .video-container video {
+        max-height: 70vh;
+        display: block; /* remove extra bottom margin*/
+      }
+      @media (max-width: 640px) {
+        .main-card {
+          @apply p-4;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="relative w-full max-w-md">
+      <div class="shadow-background"></div>
+      <div class="main-card text-center">
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-2xl font-bold text-gray-900">Your Video</h1>
+          <a href="/" class="relative group">
+            <div class="btn-shadow"></div>
+            <button
+              class="bg-[#ffc480] border-[3px] border-gray-900 text-gray-900 px-3 py-1 rounded group-hover:-translate-y-px group-hover:-translate-x-px transition-transform relative z-10"
+            >
+              Back
+            </button>
+          </a>
+        </div>
+        <div class="relative video-container" id="video-container">
+          <div class="video-loading-overlay" id="video-loading">
+            <svg
+              class="animate-spin h-10 w-10 text-gray-900"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </div>
+          <video
+            controls
+            class="rounded-xl border-[3px] border-gray-900 hidden"
+            id="video-player"
+          >
+            <source src="{{ download_url }}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="relative inline-block mt-4 group">
+          <div class="btn-shadow"></div>
+          <a
+            href="/download_file/{{filename}}?download_url={{download_url}}"
+            class="relative z-10"
+          >
+            
+          </a>
+        </div>
+      </div>
+    </div>
+    <script>
+      const video = document.getElementById("video-player");
+      const videoLoadingOverlay = document.getElementById("video-loading");
+
+      setTimeout(() => {
+        videoLoadingOverlay.classList.add("hidden");
+        video.classList.remove("hidden");
+      }, 3000);
+    </script>
+  </body>
+</html>

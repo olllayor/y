@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Downloader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .input-shadow{
+         @apply w-full h-full rounded bg-gray-900 translate-y-1 translate-x-1 absolute inset-0
+      }
+      .btn-shadow{
+        @apply w-full h-full rounded bg-gray-900 translate-y-1 translate-x-1 absolute inset-0
+      }
+       .shadow-background{
+        @apply w-full h-full absolute inset-0 bg-black rounded-xl translate-y-2 translate-x-2
+        }
+        .main-card{
+          @apply bg-[#fafafa] rounded-xl border-[3px] border-gray-900 p-6 relative z-20 space-y-6
+        }
+        @media (max-width: 640px) {
+             .main-card{
+                 @apply p-4
+             }
+            
+            
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <!-- Header Section -->
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Media Downloader</h1>
+
+        <!-- Form Container -->
+        <div class="relative w-full max-w-md">
+            <div class="shadow-background">
+            </div>
+            <form action="/download" method="POST" class="main-card" id="download-form">
+            <!-- Media URL Input -->
+            <div class="mb-4">
+                <label for="url" class="block text-base font-medium mb-2">Media URL:</label>
+                <div class="relative">
+                    <div class="input-shadow"></div>
+                    <input
+                        type="url"
+                        id="url"
+                        name="url"
+                        required
+                        placeholder="Enter the URL of the media..."
+                        class="w-full p-3 bg-[#fff4da] border-[3px] border-gray-900 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none relative z-10 pr-12"
+                    >
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <!-- Video Quality Selector -->
+                <div>
+                    <label for="video_quality" class="block text-base font-medium mb-2">Video Quality:</label>
+                   <div class="relative">
+                     <div class="input-shadow"></div>
+                     <select
+                        id="video_quality"
+                        name="video_quality"
+                        class="w-full p-3 bg-[#fff4da] border-[3px] border-gray-900 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none relative z-10"
+                    >
+                        <option value="1080">1080p</option>
+                        <option value="720">720p</option>
+                        <option value="480">480p</option>
+                    </select>
+                   </div>
+                </div>
+
+                <!-- Audio Format Selector -->
+                <div>
+                    <label for="audio_format" class="block text-base font-medium mb-2">Audio Format:</label>
+                     <div class="relative">
+                         <div class="input-shadow"></div>
+                        <select
+                        id="audio_format"
+                        name="audio_format"
+                        class="w-full p-3 bg-[#fff4da] border-[3px] border-gray-900 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none relative z-10"
+                        >
+                        <option value="mp3">MP3</option>
+                        <option value="wav">WAV</option>
+                       </select>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="relative">
+              <div class="btn-shadow"></div>
+                <button
+                    type="submit"
+                    class="w-full bg-[#ffc480] border-[3px] border-gray-900 text-gray-900 font-medium py-3 rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2 relative z-10 group-hover:-translate-y-px group-hover:-translate-x-px"
+                >
+                    <span id="download-text">Play video</span>
+                     <span id="loader" class="hidden">
+                     <svg class="animate-spin h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                     </svg>
+                    </span>
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('download-form').addEventListener('submit', function(event) {
+        const downloadButtonText = document.getElementById('download-text');
+        const loader = document.getElementById('loader');
+        
+        // change button text to "Processing..." and show loader
+          downloadButtonText.textContent = "Processing...";
+          loader.classList.remove('hidden');
+
+        });
+
+    </script>
+</body>
+</html>
